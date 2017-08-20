@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightSHip : MonoBehaviour {
-
+public class ShipBase : MonoBehaviour {
 
     public float MoveSpeed;
 
@@ -16,15 +15,16 @@ public class LightSHip : MonoBehaviour {
 
     public GameObject bullet;
     public GameObject muzzleflash;
-    public GameObject muzzle;
+    public GameObject[] muzzles;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         RealCooldown = startingFireCooldown;
         RealNewTotalCooldown = startingFireCooldown;
 
 
-       if ( this.transform.GetComponentInParent<P1Controller>() != null)
+        if (this.transform.GetComponentInParent<P1Controller>() != null)
         {
             this.transform.GetComponentInParent<P1Controller>().ShipMoveSpeed = MoveSpeed;
         }
@@ -33,11 +33,11 @@ public class LightSHip : MonoBehaviour {
             this.transform.GetComponentInParent<P2Controller>().ShipMoveSpeed = MoveSpeed;
         }
     }
-	
-	void Update ()
+
+    void Update()
     {
         Fire();
-	}
+    }
 
     public void Fire()
     {
@@ -45,8 +45,16 @@ public class LightSHip : MonoBehaviour {
 
         if (RealCooldown <= 0)
         {
-            Instantiate(bullet, muzzle.transform.position, muzzle.transform.rotation);
-            Instantiate(muzzleflash, muzzle.transform.position, Quaternion.identity);
+            foreach (GameObject t in muzzles)
+            {
+                Instantiate(bullet, t.transform.position, t.transform.rotation);
+                if (muzzleflash != null)
+                {
+                    Instantiate(muzzleflash, t.transform.position, Quaternion.identity);
+
+                }
+            }
+
             if (RealNewTotalCooldown >= MinColdown)
             {
                 RealNewTotalCooldown -= CooldownDecrease;
