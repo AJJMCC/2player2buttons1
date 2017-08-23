@@ -41,6 +41,7 @@ public class ShipBase : MonoBehaviour {
 
     public void Fire()
     {
+        if (GameManager.Instance.GamesStart)
         RealCooldown -= Time.deltaTime;
 
         if (RealCooldown <= 0)
