@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Exploder.Utils;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -26,6 +28,8 @@ public class GameManager : MonoBehaviour {
     private int P1Deaths;
     private int P2Deaths;
 
+    public Text WinTExt;
+
     public int TotalLives;
 
     public bool GamesStart = false;
@@ -44,15 +48,31 @@ public class GameManager : MonoBehaviour {
 
     public void P1Died()
     {
-        Destroy (P1Points[P1Deaths]);
+        P1Points[P1Deaths].GetComponent<Animator>().SetTrigger("Die");
         P1Deaths++;
+        if (P1Deaths >= TotalLives)
+        {
+            WinTExt.text = "P2 Wins";
+            ExploderSingleton.ExploderInstance.ExplodeObject(P1.GetComponentInChildren<ShipBase>().gameObject);
+            MyAnim.SetTrigger("Won");
+            Destroy(P2.GetComponentInChildren<ShipBase>().gameObject);
+        }
     }
 
     public void P2Died()
     {
-        Destroy(P2Points[P2Deaths]);
+        P2Points[P2Deaths].GetComponent<Animator>().SetTrigger("Die");
         P2Deaths++;
+        if (P2Deaths >= TotalLives)
+        {
+            WinTExt.text = "P1 Wins";
+            ExploderSingleton.ExploderInstance.ExplodeObject(P2.GetComponentInChildren<ShipBase>().gameObject);
+            MyAnim.SetTrigger("Won");
+            Destroy(P1.GetComponentInChildren<ShipBase>().gameObject);
+        }
     }
+
+    
 
 
 
