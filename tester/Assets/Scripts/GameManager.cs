@@ -20,21 +20,39 @@ public class GameManager : MonoBehaviour {
     public GameObject Light;
     public GameObject Life;
 
-    public float P1Wins;
-    public float P2Wins;
+    public GameObject[] P1Points;
+    public GameObject[] P2Points;
+
+    private int P1Deaths;
+    private int P2Deaths;
+
+    public int TotalLives;
 
     public bool GamesStart = false;
 
-    void Start ()
+    void Start()
     {
         Instance = this;
         MyAnim = this.gameObject.GetComponent<Animator>();
-	}
-	
-	void Update ()
+    }
+
+    void Update()
     {
-		
-	}
+
+    }
+
+
+    public void P1Died()
+    {
+        Destroy (P1Points[P1Deaths]);
+        P1Deaths++;
+    }
+
+    public void P2Died()
+    {
+        Destroy(P2Points[P2Deaths]);
+        P2Deaths++;
+    }
 
 
 
@@ -134,6 +152,7 @@ public class GameManager : MonoBehaviour {
     void StartGame()
     {
         GamesStart = true;
+        Cursor.visible = false;
     }
 
     public void Quit()

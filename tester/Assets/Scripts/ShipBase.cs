@@ -51,7 +51,7 @@ public class ShipBase : MonoBehaviour {
                 Instantiate(bullet, t.transform.position, t.transform.rotation);
                 if (muzzleflash != null)
                 {
-                    Instantiate(muzzleflash, t.transform.position, Quaternion.identity);
+                    Instantiate(muzzleflash, t.transform.position, t.transform.rotation);
 
                 }
             }

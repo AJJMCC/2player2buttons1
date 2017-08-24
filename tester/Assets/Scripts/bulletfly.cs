@@ -6,6 +6,7 @@ public class bulletfly : MonoBehaviour {
 
     public float flyspeed;
     private float LifeTime;
+    public GameObject Blast;
 
 	// Use this for initialization
 	void Start () {
@@ -19,14 +20,16 @@ public class bulletfly : MonoBehaviour {
 	}
     void OnCollisionEnter(Collision other)
     {
+        Debug.Log("bullet hit");
         if (LifeTime >= 0.3f && other.gameObject.GetComponentInParent<P2Controller>() != null)
         {
-            GameManager.Instance.P1Wins++;
-
+            GameManager.Instance.P2Died();
+            Instantiate(Blast, this.transform.position, Quaternion.identity);
         }
-        else if (LifeTime >= 0.3f && other.gameObject.GetComponentInParent<P2Controller>() != null)
+        else if (LifeTime >= 0.3f && other.gameObject.GetComponentInParent<P1Controller>() != null)
         {
-            GameManager.Instance.P1Wins++;
+            GameManager.Instance.P1Died();
+            Instantiate(Blast, this.transform.position, Quaternion.identity);
         }
     }
 
