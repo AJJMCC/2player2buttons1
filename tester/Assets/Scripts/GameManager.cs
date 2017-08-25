@@ -50,12 +50,16 @@ public class GameManager : MonoBehaviour {
     {
         P1Points[P1Deaths].GetComponent<Animator>().SetTrigger("Die");
         P1Deaths++;
+        SoundManager.Instance.Death();
         if (P1Deaths >= TotalLives)
         {
             WinTExt.text = "P2 Wins";
             ExploderSingleton.ExploderInstance.ExplodeObject(P1.GetComponentInChildren<ShipBase>().gameObject);
             MyAnim.SetTrigger("Won");
             Destroy(P2.GetComponentInChildren<ShipBase>().gameObject);
+			Cursor.visible = true;
+            PlayerSelecting = 1;
+            SoundManager.Instance.End();
         }
     }
 
@@ -63,12 +67,16 @@ public class GameManager : MonoBehaviour {
     {
         P2Points[P2Deaths].GetComponent<Animator>().SetTrigger("Die");
         P2Deaths++;
+        SoundManager.Instance.Death();
         if (P2Deaths >= TotalLives)
         {
             WinTExt.text = "P1 Wins";
             ExploderSingleton.ExploderInstance.ExplodeObject(P2.GetComponentInChildren<ShipBase>().gameObject);
             MyAnim.SetTrigger("Won");
             Destroy(P1.GetComponentInChildren<ShipBase>().gameObject);
+			Cursor.visible = true;
+            PlayerSelecting = 1;
+            SoundManager.Instance.End();
         }
     }
 
@@ -92,6 +100,7 @@ public class GameManager : MonoBehaviour {
             Instantiate(Fire, P2.transform.position, P2.transform.rotation, P2.transform);
             P2Select();
         }
+        SoundManager.Instance.CLicked();
     }
 
     public void EarthShipSelected()
@@ -107,6 +116,7 @@ public class GameManager : MonoBehaviour {
             Instantiate(Earth, P2.transform.position, P2.transform.rotation, P2.transform);
             P2Select();
         }
+        SoundManager.Instance.CLicked();
     }
     public void WaterShipSelected()
     {
@@ -121,6 +131,7 @@ public class GameManager : MonoBehaviour {
             Instantiate(Water, P2.transform.position, P2.transform.rotation, P2.transform);
             P2Select();
         }
+        SoundManager.Instance.CLicked();
     }
     public void LightShipSelected()
     {
@@ -135,6 +146,7 @@ public class GameManager : MonoBehaviour {
             Instantiate(Light, P2.transform.position, P2.transform.rotation, P2.transform);
             P2Select();
         }
+        SoundManager.Instance.CLicked();
     }
     public void LifeShipSelected()
     {
@@ -149,34 +161,36 @@ public class GameManager : MonoBehaviour {
             Instantiate(Life, P2.transform.position, P2.transform.rotation, P2.transform);
             P2Select();
         }
+        SoundManager.Instance.CLicked();
     }
 
 
     public void MenuToSelect()
     {
         MyAnim.SetTrigger("ClickedPlay");
-        Debug.Log("Pressed play");
+        Debug.Log("Pressed play"); SoundManager.Instance.CLicked();
     }
 
     public void P1Select()
     {
-        MyAnim.SetTrigger("P1Selected");
+        MyAnim.SetTrigger("P1Selected"); SoundManager.Instance.CLicked();
     }
 
     public void P2Select()
     {
         MyAnim.SetTrigger("P2Selected");
-        Invoke("StartGame", 1);
+        Invoke("StartGame", 1); SoundManager.Instance.CLicked();
     }
         
     void StartGame()
     {
         GamesStart = true;
-        Cursor.visible = false;
+        Cursor.visible = false; SoundManager.Instance.CLicked();
     }
 
     public void Quit()
     {
+        SoundManager.Instance.CLicked();
         Application.Quit();
     }
 }
