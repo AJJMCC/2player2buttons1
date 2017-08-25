@@ -80,9 +80,15 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    
 
-
+    public void ReloadLevel()
+    {
+        Application.LoadLevel(0);
+    }
+    public void FadeOutMusic()
+    {
+        SoundManager.Instance.FadeOut();
+    }
 
 
     // button commands

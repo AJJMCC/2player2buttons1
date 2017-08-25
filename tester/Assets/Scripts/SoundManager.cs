@@ -55,4 +55,28 @@ public class SoundManager : MonoBehaviour
     {
         SFX.PlayOneShot(gameover);
     }
+
+    public void FadeOut()
+    {
+        StartCoroutine(AudioFadeScript.FadeOut(MusicPlayer, 0.5f));
+    }
+
+
+    public static class AudioFadeScript
+    {
+        public static IEnumerator FadeOut(AudioSource audioSource, float FadeTime)
+        {
+            float startVolume = audioSource.volume;
+
+            while (audioSource.volume > 0)
+            {
+                audioSource.volume -= startVolume * Time.deltaTime / FadeTime;
+
+                yield return null;
+            }
+
+            audioSource.Stop();
+            audioSource.volume = startVolume;
+        }
+    }
 }
